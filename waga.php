@@ -38,12 +38,8 @@ $result = mysqli_query($conn, $query);
                     $weight = $_POST['weight'];
                     $height = $_POST['height'];
                     if(!empty($weight) || !empty($height)) {
-                    $bmi_result = $weight / (($height / 100) ** 2);
-                    $bmi_result = round($bmi_result, 2);
-                        echo "Twoja waga $weight<br>";
-                        echo "Twój wzrost $height<br>";
-                        echo "<hr>";
-                        echo "BMI wynosi $bmi_result";
+                        $bmi_result = $weight / (($height / 100) ** 2);
+                        $bmi_result = round($bmi_result, 2);
                         if ($bmi_result < 18.5) {
                             $bmi_id = 1;
                         } elseif ($bmi_result < 25) {
@@ -53,7 +49,10 @@ $result = mysqli_query($conn, $query);
                         } else {
                             $bmi_id = 4;
                         }
-                        $BMI_query = "INSERT INTO wynik (id, bmi_id, data_pomiaru, wynik) VALUES (NULL, $bmi_id, '2020-05-20', $bmi_result)";
+                        $data = DATE("Y-m-d");
+                        echo "Twoja waga: $weight, Twój wzrost: $height<br/>BMI wynosi: $bmi_result";
+                        $BMI_query = "INSERT INTO wynik (id, bmi_id, data_pomiaru, wynik) VALUES (NULL, $bmi_id, '$data', $bmi_result)";
+                        mysqli_query($conn, $BMI_query);
                     }
                 }
             ?>
